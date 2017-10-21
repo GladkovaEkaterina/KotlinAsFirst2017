@@ -100,7 +100,20 @@ fun ageDescription(age: Int): String{
                  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
                  * Если такой треугольник не существует, вернуть -1.
                  */
-                fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+                fun triangleKind(a: Double, b: Double, c: Double): Int =
+
+                    if ((a + b <= c) || (a + c <= b) || (b + c <= a)){
+                       -1
+                    }
+                    else if ((a * a == b * b + c * c) || (b * b == a * a + c * c) || (c * c == b * b + a * a)) {
+                        1
+                    } else if ((a * a > b * b + c * c) || (b * b > a * a + c * c) || (c * c > b * b + a * a)) {
+                        2
+                    } else {
+                        0
+                    }
+
+
 
                 /**
                  * Средняя
@@ -110,5 +123,28 @@ fun ageDescription(age: Int): String{
                  * Найти длину пересечения отрезков AB и CD.
                  * Если пересечения нет, вернуть -1.
                  */
-                fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+                fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+                        if ((b == c)||(d == a)) {
+                            0
+                        }
+                        else if ((b < c) || ( d < a)) {
+                            -1
+                        }
+                        else if ((a > c) && (b < d)) {
+                            b - a
+                        }
+                        else if ((c > a) && (d > b)) {
+                            b - c
+                        }
+                         else if ((a < d) && (a > c)){
+                            d - a
+                        }
+                         else
+                        {
+                            d - c
+                        }
+
+
+
+
 
