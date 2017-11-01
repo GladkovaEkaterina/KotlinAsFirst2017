@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task1
 
 import lesson1.task1.discriminant
@@ -34,25 +35,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String{
-        if ((age % 10 == 1) &&( age != 11) && (age != 111))// I.toString();
-        {
-            return age.toString() + " год"
-        }
-        else {
-            if ((age % 10 >= 2) && (age % 10 <= 4) && (age != 12) &&
-                    (age != 13) && (age != 14) && (age != 112) && (age != 113) && (age != 114)) {
-                return age.toString() + " года"
-            }
-            else {
-                return age.toString() + " лет"
-            }
-        }
+fun ageDescription(age: Int): String {
+    return when {
+        ((age % 10 == 1) && (age != 11) && (age != 111)) -> return "$age год"
+        ((age % 10 >= 2) && (age % 10 <= 4) && (age != 12) && (age != 13) && (age != 14) &&
+                (age != 112) && (age != 113) && (age != 114)) -> "$age года"
+        else -> return "$age лет"
+    }
 }
-
-
-
-
 
 
 /**
@@ -64,18 +54,20 @@ fun ageDescription(age: Int): String{
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double = TODO()
- /**
-  * Простая
-  *
-  * Нa шахматной доске стоят черный король и две белые ладьи (ладья бьет по горизонтали и вертикали).
-  * Определить, не находится ли король под боем, а если есть угроза, то от кого именно.
-  * Вернуть 0, если угрозы нет, 1, если угроза только от первой ладьи, 2, если только от второй ладьи,
-  * и 3, если угроза от обеих ладей.
-  * Считать, что ладьи не могут загораживать друг друга
-  */
- fun whichRookThreatens(kingX: Int, kingY: Int,
-                        rookX1: Int, rookY1: Int,
-                        rookX2: Int, rookY2: Int): Int = TODO()
+
+/**
+ * Простая
+ *
+ * Нa шахматной доске стоят черный король и две белые ладьи (ладья бьет по горизонтали и вертикали).
+ * Определить, не находится ли король под боем, а если есть угроза, то от кого именно.
+ * Вернуть 0, если угрозы нет, 1, если угроза только от первой ладьи, 2, если только от второй ладьи,
+ * и 3, если угроза от обеих ладей.
+ * Считать, что ладьи не могут загораживать друг друга
+ */
+fun whichRookThreatens(kingX: Int, kingY: Int,
+                       rookX1: Int, rookY1: Int,
+                       rookX2: Int, rookY2: Int): Int = TODO()
+
 /**
  * Простая
  * На шахматной доске стоят черный король и белые ладья и слон
@@ -88,6 +80,7 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int = TODO()
+
 /**
  * Простая
  * Треугольник задан длинами своих сторон a, b, c.
@@ -95,19 +88,17 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int =
-        if ((a + b <= c) || (a + c <= b) || (b + c <= a)) {
-            -1
-        }
-        else if ((a * a == b * b + c * c) || (b * b == a * a + c * c)
-                || (c * c == b * b + a * a)) {
-            1
-        } else if ((a * a > b * b + c * c) || (b * b > a * a + c * c)
-                || (c * c > b * b + a * a)) {
-            2
-        } else {
-            0
-        }
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val x = a * a
+    val y = b * b
+    val z = c * c
+    return when {
+        ((a + b <= c) || (a + c <= b) || (b + c <= a)) -> -1
+        ((x == y + z) || (y == x + z) || (z == y + x)) -> 1
+        ((x > y + z) || (y > x + z) || (z > y + x)) -> 2
+        else -> 0
+    }
+}
 
 /**
  * Средняя
@@ -117,10 +108,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int =
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
-    (b == c)|| (d == a) -> 0
-    (b < c) || ( d < a) -> -1
-    (a > c) && (b < d) -> b -a
+    b == c || d == a -> 0
+    (b < c) || (d < a) -> -1
+    (a > c) && (b < d) -> b - a
     (c > a) && (d > b) -> b - c
     (a < d) && (a > c) -> d - a
-          else -> d - c
-        }
+    else -> d - c
+}

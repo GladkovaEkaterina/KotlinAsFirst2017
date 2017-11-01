@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
+import java.lang.Math.*
 import kotlin.system.exitProcess
 
 /**
@@ -36,7 +38,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -66,13 +68,12 @@ fun digitNumber(n: Int): Int {
     var m = n
     var k = 0
     if (m == 0) return 1
-    while (m > 0) {
+    while (abs(m) > 0) {
         m = m / 10
-        k ++
+        k++
     }
     return k
 }
-
 
 
 /**
@@ -112,8 +113,7 @@ fun lcm(m: Int, n: Int): Int = TODO()
 fun minDivisor(n: Int): Int {
     var k = 0
     for (i in 2..n)
-        if (n % i == 0)
-        {
+        if (n % i == 0) {
             k = i
             break
         }
@@ -129,12 +129,10 @@ fun minDivisor(n: Int): Int {
 fun maxDivisor(n: Int): Int {
     var k = 0
     for (i in 1..n - 1)
-        if (n % i == 0)
-        {
+        if (n % i == 0) {
             k = i
         }
     return k
-
 }
 
 /**
@@ -154,7 +152,6 @@ fun isCoPrime(m: Int, n: Int): Boolean {
             b = b - a
     }
     return a == 1
-
 }
 
 /**
@@ -164,7 +161,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO ()
+fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 
 
 /**
@@ -194,7 +191,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
 fun revert(n: Int): Int {
     var N = n
     var R = 0
-    while (N > 0){
+    while (N > 0) {
         R = R * 10 + N % 10
         N = N / 10
     }
@@ -208,7 +205,7 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean = n == revert (n)
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя
