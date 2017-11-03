@@ -37,13 +37,12 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String {
     return when {
-        ((age % 10 == 1) && (age != 11) && (age != 111)) -> return "$age год"
-        ((age % 10 >= 2) && (age % 10 <= 4) && (age != 12) && (age != 13) && (age != 14) &&
-                (age != 112) && (age != 113) && (age != 114)) -> "$age года"
+        (age % 10 == 1) && (age != 11) && (age != 111) -> return "$age год"
+        (age % 10 >= 2) && (age % 10 <= 4) && (age != 12) && (age != 13) && (age != 14) &&
+                (age != 112) && (age != 113) && (age != 114) -> "$age года"
         else -> return "$age лет"
     }
 }
-
 
 /**
  * Простая*
@@ -93,9 +92,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val y = b * b
     val z = c * c
     return when {
-        ((a + b <= c) || (a + c <= b) || (b + c <= a)) -> -1
-        ((x == y + z) || (y == x + z) || (z == y + x)) -> 1
-        ((x > y + z) || (y > x + z) || (z > y + x)) -> 2
+        (a + b <= c) || (a + c <= b) || (b + c <= a) -> -1
+        (x == y + z) || (y == x + z) || (z == y + x) -> 1
+        (x > y + z) || (y > x + z) || (z > y + x) -> 2
         else -> 0
     }
 }

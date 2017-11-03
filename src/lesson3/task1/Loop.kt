@@ -189,13 +189,13 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int {
-    var N = n
-    var R = 0
-    while (N > 0) {
-        R = R * 10 + N % 10
-        N = N / 10
+    var x = n
+    var y = 0
+    while (x > 0) {
+        y = y * 10 + x % 10
+        x = x / 10
     }
-    return R
+    return y
 }
 
 /**
