@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * Пример
@@ -121,7 +122,11 @@ fun abs(v: List<Double>): Double {
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = list.sum() / list.size
+fun mean(list: List<Double>): Double {
+    if (list.isEmpty())
+        return 0.0
+    else return list.sum() / list.size
+}
 
 /**
  * Средняя
@@ -132,7 +137,7 @@ fun mean(list: List<Double>): Double = list.sum() / list.size
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val ss = mean(list)
+    val ss = list.sum() / list.size
     for (i in 0 until list.size) {
         list[i] = list[i] - ss
     }
@@ -148,6 +153,9 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
 fun times(a: List<Double>, b: List<Double>): Double = TODO()
+
+
+
 
 /**
  * Средняя
@@ -178,7 +186,21 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    var digit = n
+    var divider = 2
+    val AllDividers: MutableList<Int> = mutableListOf()
+    while
+            (digit > 0 && divider <= Math.round(Math.sqrt(n.toDouble())).toInt()) {
+        if (digit % divider == 0) {
+            AllDividers.add(divider)
+            digit /= divider
+        } else divider++
+    }
+    if (digit != 1) AllDividers.add(digit)
+    return AllDividers
+}
+
 
 /**
  * Сложная
@@ -186,8 +208,7 @@ fun factorize(n: Int): List<Int> = TODO()
  * Разложить заданное натуральное число n > 1 на простые множители.
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
-fun factorizeToString(n: Int): String = TODO()
-
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 /**
  * Средняя
  *
