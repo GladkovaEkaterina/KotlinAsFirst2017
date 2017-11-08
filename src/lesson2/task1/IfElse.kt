@@ -37,9 +37,9 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String {
     return when {
-        (age % 10 == 1) && (age != 11) && (age != 111) -> return "$age год"
-        (age % 10 >= 2) && (age % 10 <= 4) && (age != 12) && (age != 13) && (age != 14) &&
-                (age != 112) && (age != 113) && (age != 114) -> "$age года"
+        age % 10 == 1 && age != 11 && age != 111 -> "$age год"
+        age % 10 >= 2 && age % 10 <= 4 && age != 12 && age != 13 && age != 14 &&
+                age != 112 && age != 113 && age != 114 -> "$age года"
         else -> return "$age лет"
     }
 }
@@ -88,14 +88,14 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val x = a * a
-    val y = b * b
-    val z = c * c
+    val minSide = Math.min(Math.min(a, b), c)
+    val maxSide = Math.max(Math.max(a, b), c)
+    val midSide = a + b + c - minSide - maxSide
     return when {
-        (a + b <= c) || (a + c <= b) || (b + c <= a) -> -1
-        (x == y + z) || (y == x + z) || (z == y + x) -> 1
-        (x > y + z) || (y > x + z) || (z > y + x) -> 2
-        else -> 0
+        midSide + minSide < maxSide  -> -1
+         midSide * midSide + minSide * minSide == maxSide * maxSide-> 1
+         midSide * midSide + minSide * minSide > maxSide * maxSide  -> 0
+        else -> 2
     }
 }
 

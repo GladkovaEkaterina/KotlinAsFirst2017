@@ -87,14 +87,12 @@ fun fib(n: Int): Int {
     var fib3 = 0
     if (n <= 2)
         return 1
-    else {
-        for (i in 3..n) {
-            fib3 = fib1 + fib2
-            fib1 = fib2
-            fib2 = fib3
-        }
-        return fib3
+    for (i in 3..n) {
+        fib3 = fib1 + fib2
+        fib1 = fib2
+        fib2 = fib3
     }
+    return fib3
 }
 
 /**
@@ -111,13 +109,11 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var k = 0
-    for (i in 2..n)
-        if (n % i == 0) {
-            k = i
-            break
-        }
-    return k
+    if (n % 2 == 0) return 2
+    else for (i in 3..Math.sqrt(n.toDouble()).toInt() step 2) {
+        if (n % i == 0) return i
+    }
+    return n
 }
 
 
@@ -126,14 +122,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var k = 0
-    for (i in 1..n - 1)
-        if (n % i == 0) {
-            k = i
-        }
-    return k
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -222,7 +211,15 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var strWithSquares = ""
+    var i = 1
+    while (strWithSquares.length <= n) {
+        strWithSquares += (i * i)
+        i++
+    }
+    return strWithSquares[n - 1].toInt() - 0x30
+}
 
 /**
  * Сложная
