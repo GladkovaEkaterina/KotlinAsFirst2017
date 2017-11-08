@@ -113,8 +113,7 @@ fun abs(v: List<Double>): Double {
     for (elem in v) {
         someVariable += elem * elem
     }
-    someVariable = Math.sqrt(someVariable)
-    return someVariable
+    return Math.sqrt(someVariable)
 }
 
 /**
