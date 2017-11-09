@@ -277,4 +277,37 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    var str = ""
+    val units1 = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val units2 = listOf("", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val sss = listOf("", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+    val tens = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+    val handreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    val thousands = listOf("", "тысяча", "тысячи", "тысяч")
+    val sotniT = n / 100000
+    val desyatkiT = (n / 10000) % 10
+    val edinT = (n / 1000) % 10
+    val sotni = n / 100 % 10
+    val desyatki = n / 10 % 10
+    val edin = n % 10
+    if (sotniT != 0) str += handreds[sotniT] + " "
+    if (desyatkiT == 1) str += sss[edinT] + " "
+    else {
+        if (desyatkiT != 0) str += tens[desyatkiT] + " "
+        if (edinT != 0) str += units2[edinT] + " "
+    }
+    str += when {
+        sotniT == 0 && desyatkiT == 0 && edinT == 0 -> ""
+        edinT == 1 -> thousands[1] + " "
+        edinT in 2..4 -> thousands[2] + " "
+        else -> thousands[3] + " "
+    }
+    if (sotni != 0) str += handreds[sotni] + " "
+    if (desyatki == 1) str += sss[edin]
+    else {
+        if (desyatki != 0) str += tens[desyatki] + " "
+        if (edin != 0) str += units1[edin]
+    }
+    return str.trim()
+}
