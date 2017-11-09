@@ -212,11 +212,13 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
+    var digits = 0
     var strWithSquares = ""
     var i = 1
-    while (strWithSquares.length <= n) {
-        strWithSquares += (i * i)
+    while (digits <= n) {
+        strWithSquares = (i * i).toString()
         i++
+        digits += strWithSquares.length
     }
     return strWithSquares[n - 1].toInt() - 0x30
 }

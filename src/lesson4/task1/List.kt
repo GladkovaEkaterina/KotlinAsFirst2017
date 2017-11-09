@@ -292,16 +292,16 @@ fun russian(n: Int): String {
     val desyatki = n / 10 % 10
     val edin = n % 10
     if (sotniT != 0) str += handreds[sotniT] + " "
-    if (desyatkiT == 1) str += sss[edinT] + " "
+    if (desyatkiT == 1) str += sss[edinT] + " тысяч "
     else {
         if (desyatkiT != 0) str += tens[desyatkiT] + " "
         if (edinT != 0) str += units2[edinT] + " "
-    }
-    str += when {
-        sotniT == 0 && desyatkiT == 0 && edinT == 0 -> ""
-        edinT == 1 -> thousands[1] + " "
-        edinT in 2..4 -> thousands[2] + " "
-        else -> thousands[3] + " "
+        str += when {
+            sotniT == 0 && desyatkiT == 0 && edinT == 0 -> ""
+            edinT == 1 -> thousands[1] + " "
+            edinT in 2..4 -> thousands[2] + " "
+            else -> thousands[3] + " "
+        }
     }
     if (sotni != 0) str += handreds[sotni] + " "
     if (desyatki == 1) str += sss[edin]
