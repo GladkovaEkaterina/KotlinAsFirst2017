@@ -82,7 +82,7 @@ fun dateStrToDigit(str: String): String {
                 mounth == "мая" && day in 1..30 -> ".05."
                 mounth == "июня" && day in 1..31 -> ".06."
                 mounth == "июля" && day in 1..30 -> ".07."
-                mounth == "августа" && day in 1..30 -> ".08"
+                mounth == "августа" && day in 1..30 -> ".08."
                 mounth == "сентября" && day in 1..31 -> ".09."
                 mounth == "октября" && day in 1..30 -> ".10."
                 mounth == "ноября" && day in 1..31 -> ".11."
