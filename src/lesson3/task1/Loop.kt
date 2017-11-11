@@ -209,18 +209,19 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Найти n-ю цифру последовательности из квадратов целых чисел:
  * 149162536496481100121144...
- * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
+ * Например, 2-я цифра равна 4, 7-я 5, 12-я 6. 1491625 n=6 str="25" digits=5
  */
 fun squareSequenceDigit(n: Int): Int {
     var digits = 0
     var strWithSquares = ""
     var i = 1
-    while (digits <= n) {
+    while (digits < n) {
         strWithSquares = (i * i).toString()
         i++
         digits += strWithSquares.length
     }
-    return strWithSquares[n - 1].toInt() - 0x30
+    digits -= strWithSquares.length
+    return strWithSquares[n - digits - 1].toInt() - '0'.toInt()
 }
 
 /**
