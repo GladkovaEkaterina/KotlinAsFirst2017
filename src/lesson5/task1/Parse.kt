@@ -71,25 +71,26 @@ fun dateStrToDigit(str: String): String {
     if (parts.size == 3) {
         try {
             val day = parts[0].toInt()
-            val mounth = parts[1]
-            var strWithDate = twoDigitStr(day)
-            strWithDate += when {
-                mounth == "января" && day in 1..31 -> ".01."
-                mounth == "февраля" && day in 1..29 -> ".02."
-                mounth == "марта" && day in 1..30 -> ".03."
-                mounth == "апреля" && day in 1..31 -> ".04."
-                mounth == "мая" && day in 1..30 -> ".05."
-                mounth == "июня" && day in 1..31 -> ".06."
-                mounth == "июля" && day in 1..30 -> ".07."
-                mounth == "августа" && day in 1..30 -> ".08."
-                mounth == "сентября" && day in 1..31 -> ".09."
-                mounth == "октября" && day in 1..30 -> ".10."
-                mounth == "ноября" && day in 1..31 -> ".11."
-                mounth == "декабря" && day in 1..31 -> ".12."
+            val month = parts[1]
+            val stringBuilder = StringBuilder()
+            stringBuilder.append(twoDigitStr(day))
+            stringBuilder.append(when {
+                month == "января" && day in 1..31 -> ".01."
+                month == "февраля" && day in 1..29 -> ".02."
+                month == "марта" && day in 1..30 -> ".03."
+                month == "апреля" && day in 1..31 -> ".04."
+                month == "мая" && day in 1..30 -> ".05."
+                month == "июня" && day in 1..31 -> ".06."
+                month == "июля" && day in 1..30 -> ".07."
+                month == "августа" && day in 1..30 -> ".08."
+                month == "сентября" && day in 1..31 -> ".09."
+                month == "октября" && day in 1..30 -> ".10."
+                month == "ноября" && day in 1..31 -> ".11."
+                month == "декабря" && day in 1..31 -> ".12."
                 else -> return ""
-            }
-            strWithDate += parts[2]
-            return strWithDate
+            })
+            stringBuilder.append(parts[2])
+            return stringBuilder.toString()
         } catch (e: NumberFormatException) {
             return ""
         }
@@ -110,9 +111,9 @@ fun dateDigitToStr(digital: String): String {
         try {
             val day = parts[0].toInt()
             if (!(day in 1..31)) return ""
-            val mounth = parts[1]
+            val month = parts[1]
             strWithDate += day
-            strWithDate += when (mounth) {
+            strWithDate += when (month) {
                 "01" -> " января "
                 "02" -> " февраля "
                 "03" -> " марта "
@@ -236,7 +237,26 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val parts = description.split("; ")
+    var res = 0.0
+    var product = ""
+    for (elem in parts) {
+        val parts2 = elem.split(" ")
+        if (parts2.size == 2) {
+            try {
+                val s = parts2[1].toDouble()
+                if (s > res) {
+                    res = s
+                    product = parts2[0]
+                }
+            } catch (e: NumberFormatException) {
+                return ""
+            }
+        }
+    }
+    return product
+}
 
 /**
  * Сложная
@@ -246,7 +266,6 @@ fun mostExpensive(description: String): String = TODO()
  * Римские цифры: 1 = I, 4 = IV, 5 = V, 9 = IX, 10 = X, 40 = XL, 50 = L,
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: XXIII = 23, XLIV = 44, C = 100
- *
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int = TODO()
