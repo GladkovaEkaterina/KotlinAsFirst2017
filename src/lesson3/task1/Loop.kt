@@ -221,7 +221,7 @@ fun squareSequenceDigit(n: Int): Int {
         digits += strWithSquares.length
     }
     digits -= strWithSquares.length
-    return strWithSquares[n - digits - 1].toInt() - '0'.toInt()
+    return strWithSquares[n - digits - 1] - '0'
 }
 
 /**

@@ -68,12 +68,11 @@ fun main(args: Array<String>) {
  */
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    var strWithDate: String
     if (parts.size == 3) {
         try {
             val day = parts[0].toInt()
             val mounth = parts[1]
-            strWithDate = twoDigitStr(day)
+            var strWithDate = twoDigitStr(day)
             strWithDate += when {
                 mounth == "января" && day in 1..31 -> ".01."
                 mounth == "февраля" && day in 1..29 -> ".02."
@@ -90,10 +89,10 @@ fun dateStrToDigit(str: String): String {
                 else -> return ""
             }
             strWithDate += parts[2]
+            return strWithDate
         } catch (e: NumberFormatException) {
             return ""
         }
-        return strWithDate
     } else return ""
 }
 
@@ -113,19 +112,19 @@ fun dateDigitToStr(digital: String): String {
             if (!(day in 1..31)) return ""
             val mounth = parts[1]
             strWithDate += day
-            strWithDate += when {
-                mounth == "01" -> " января "
-                mounth == "02" -> " февраля "
-                mounth == "03" -> " марта "
-                mounth == "04" -> " апреля "
-                mounth == "05" -> " мая "
-                mounth == "06" -> " июня "
-                mounth == "07" -> " июля "
-                mounth == "08" -> " августа "
-                mounth == "09" -> " сентября "
-                mounth == "10" -> " октября "
-                mounth == "11" -> " ноября "
-                mounth == "12" -> " декабря "
+            strWithDate += when (mounth) {
+                "01" -> " января "
+                "02" -> " февраля "
+                "03" -> " марта "
+                "04" -> " апреля "
+                "05" -> " мая "
+                "06" -> " июня "
+                "07" -> " июля "
+                "08" -> " августа "
+                "09" -> " сентября "
+                "10" -> " октября "
+                "11" -> " ноября "
+                "12" -> " декабря "
                 else -> return ""
             }
             strWithDate += parts[2]
@@ -183,7 +182,31 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val parts = expression.split(" ")
+    var state = 1
+    var result = 0
+    for (elem in parts) {
+        when {
+            elem == "+" && state == 3 -> state = 1
+            elem == "-" && state == 3 -> state = 2
+            else -> {
+                try {
+                    val digit = elem.toInt()
+                    when (state) {
+                        1 -> result += digit
+                        2 -> result -= digit
+                        3 -> throw IllegalArgumentException()
+                    }
+                    state = 3
+                } catch (e: NumberFormatException) {
+                    throw IllegalArgumentException()
+                }
+            }
+        }
+    }
+    return result
+}
 
 /**
  * Сложная

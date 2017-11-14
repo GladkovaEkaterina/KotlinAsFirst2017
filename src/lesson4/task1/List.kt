@@ -293,11 +293,11 @@ fun russian(n: Int): String {
     val sotni = n / 100 % 10
     val desyatki = n / 10 % 10
     val edin = n % 10
-    if (sotniT != 0) stringBuilder.append(handreds[sotniT] + " ")
-    if (desyatkiT == 1) stringBuilder.append(sss[edinT] + " тысяч ")
+    if (sotniT != 0) stringBuilder.append(handreds[sotniT], " ")
+    if (desyatkiT == 1) stringBuilder.append(sss[edinT], " тысяч ")
     else {
-        if (desyatkiT != 0) stringBuilder.append(tens[desyatkiT] + " ")
-        if (edinT != 0) stringBuilder.append(units2[edinT] + " ")
+        if (desyatkiT != 0) stringBuilder.append(tens[desyatkiT], " ")
+        if (edinT != 0) stringBuilder.append(units2[edinT], " ")
         stringBuilder.append(when {
             sotniT == 0 && desyatkiT == 0 && edinT == 0 -> ""
             edinT == 1 -> thousands[1] + " "
@@ -305,10 +305,10 @@ fun russian(n: Int): String {
             else -> thousands[3] + " "
         })
     }
-    if (sotni != 0) stringBuilder.append(handreds[sotni] + " ")
+    if (sotni != 0) stringBuilder.append(handreds[sotni], " ")
     if (desyatki == 1) stringBuilder.append(sss[edin])
     else {
-        if (desyatki != 0) stringBuilder.append(tens[desyatki] + " ")
+        if (desyatki != 0) stringBuilder.append(tens[desyatki], " ")
         if (edin != 0) stringBuilder.append(units1[edin])
     }
     return stringBuilder.toString().trim()
