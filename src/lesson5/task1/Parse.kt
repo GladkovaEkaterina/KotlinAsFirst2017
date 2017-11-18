@@ -106,14 +106,14 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    var strWithDate = ""
+    val stringBuilder = StringBuilder()
     if (parts.size == 3) {
         try {
             val day = parts[0].toInt()
             if (!(day in 1..31)) return ""
             val month = parts[1]
-            strWithDate += day
-            strWithDate += when (month) {
+            stringBuilder.append(day)
+            stringBuilder.append(when (month) {
                 "01" -> " января "
                 "02" -> " февраля "
                 "03" -> " марта "
@@ -127,12 +127,12 @@ fun dateDigitToStr(digital: String): String {
                 "11" -> " ноября "
                 "12" -> " декабря "
                 else -> return ""
-            }
-            strWithDate += parts[2]
+            })
+            stringBuilder.append(parts[2])
         } catch (e: NumberFormatException) {
             return ""
         }
-        return strWithDate
+        return stringBuilder.toString()
     } else return ""
 }
 
@@ -183,23 +183,26 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
+enum class State {
+    Plus, Minus, Digit
+}
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
-    var state = 1
+    var state = State.Plus
     var result = 0
     for (elem in parts) {
         when {
-            elem == "+" && state == 3 -> state = 1
-            elem == "-" && state == 3 -> state = 2
+            elem == "+" && state == State.Digit -> state = State.Plus
+            elem == "-" && state == State.Digit -> state = State.Minus
             else -> {
                 try {
                     val digit = elem.toInt()
                     when (state) {
-                        1 -> result += digit
-                        2 -> result -= digit
-                        3 -> throw IllegalArgumentException()
+                        State.Plus -> result += digit
+                        State.Minus -> result -= digit
+                        State.Digit -> throw IllegalArgumentException()
                     }
-                    state = 3
+                    state = State.Digit
                 } catch (e: NumberFormatException) {
                     throw IllegalArgumentException()
                 }
@@ -246,14 +249,14 @@ fun mostExpensive(description: String): String {
         if (parts2.size == 2) {
             try {
                 val s = parts2[1].toDouble()
-                if (s > res) {
+                if (s >= res) {
                     res = s
                     product = parts2[0]
                 }
             } catch (e: NumberFormatException) {
                 return ""
             }
-        }
+        } else return ""
     }
     return product
 }
