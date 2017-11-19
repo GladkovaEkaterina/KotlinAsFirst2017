@@ -309,4 +309,66 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    var cellPosition = cells / 2
+    val digits = MutableList<Int>(cells, { 0 })
+    var count = 0
+    var i = 0
+    while (i < commands.length) {
+        when {
+            commands[i] == '+' -> digits[cellPosition]++
+            commands[i] == '-' -> digits[cellPosition]--
+            commands[i] == '<' -> cellPosition--
+            commands[i] == '>' -> cellPosition++
+            commands[i] == ' ' -> {
+            }
+            commands[i] == '[' -> {
+                if (digits[cellPosition] == 0) {
+                    var wasFound = false
+                    var level = 1
+                    for (j in i + 1 until commands.length) {
+                        if (commands[j] == ']') {
+                            level--
+                            if (level == 0) {
+                                i = j
+                                wasFound = true
+                                break
+                            }
+                        }
+                        if (commands[j] == '[')
+                            level++
+                    }
+                    if (wasFound == false)
+                        throw IllegalArgumentException()
+                }
+            }
+            commands[i] == ']' -> {
+                if (digits[cellPosition] != 0) {
+                    var wasFound = false
+                    var level = 1
+                    for (j in (i - 1) downTo 0) {
+                        if (commands[j] == '[') {
+                            level--
+                            if (level == 0) {
+                                wasFound = true
+                                i = j
+                                break
+                            }
+                        }
+                        if (commands[j] == ']')
+                            level++
+                    }
+                    if (wasFound == false)
+                        throw IllegalArgumentException()
+                }
+            }
+            else -> throw IllegalArgumentException()
+        }
+        if (cellPosition > cells) throw IllegalStateException()
+        count++
+        i++
+        if (count == limit)
+            break
+    }
+    return digits
+}
