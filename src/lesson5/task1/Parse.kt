@@ -310,6 +310,17 @@ fun fromRoman(roman: String): Int = TODO()
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    var level1 = 0
+    for (symbol in commands) {
+        when (symbol) {
+            '[' -> level1++
+            ']' -> level1--
+        }
+        if (level1 < 0)
+            throw IllegalArgumentException()
+    }
+    if (level1 != 0)
+        throw IllegalArgumentException()
     var cellPosition = cells / 2
     val digits = MutableList<Int>(cells, { 0 })
     var count = 0
