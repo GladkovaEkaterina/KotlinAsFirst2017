@@ -338,7 +338,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                     if (commands[j] == '[')
                         level++
                 }
-                if (wasFound == false)
+                if (!wasFound)
                     throw IllegalArgumentException()
             }
             commands[i] == ']' -> {
@@ -357,12 +357,12 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                     if (commands[j] == ']')
                         level++
                 }
-                if (wasFound == false)
+                if (!wasFound)
                     throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()
         }
-        if (cellPosition > cells || cellPosition < 0) throw IllegalStateException()
+        if (cellPosition >= cells || cellPosition < 0) throw IllegalStateException()
         count++
         i++
         if (count == limit)

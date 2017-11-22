@@ -119,7 +119,7 @@ class Tests {
     @Test
     @Tag("Impossible")
     fun computeDeviceCells() {
-        computeDeviceCells(559, "]", 10000)
+        computeDeviceCells(1, "[[[[-]-<+]-]<- ++-+< ><-+<]>----+ -+->[<-+>-+<+ ---+-+--[ -]<-><-<- [--->+-+---->+--[-<[++ +<<<>-][[ --<<-<>-<>>-- -<-<<-]+<<<+-<->+--->>]]]]", 10000)
 //        assertEquals(listOf(0, 0, 0, 0, 0, 1, 1, 1, 1, 1), computeDeviceCells(10, "+>+>+>+>+", 10000))
 //        assertEquals(listOf(-1, -1, -1, -1, -1, 0, 0, 0, 0, 0), computeDeviceCells(10, "<-<-<-<-<-", 10000))
 //        assertEquals(listOf(1, 1, 1, 1, 1, 0, 0, 0, 0, 0), computeDeviceCells(10, "- <<<<< +[>+]", 10000))
