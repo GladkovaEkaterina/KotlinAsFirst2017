@@ -323,44 +323,42 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
             commands[i] == ' ' -> {
             }
             commands[i] == '[' -> {
-                if (digits[cellPosition] == 0) {
-                    var wasFound = false
-                    var level = 1
-                    for (j in i + 1 until commands.length) {
-                        if (commands[j] == ']') {
-                            level--
-                            if (level == 0) {
+                var wasFound = false
+                var level = 1
+                for (j in i + 1 until commands.length) {
+                    if (commands[j] == ']') {
+                        level--
+                        if (level == 0) {
+                            wasFound = true
+                            if (digits[cellPosition] == 0)
                                 i = j
-                                wasFound = true
-                                break
-                            }
+                            break
                         }
-                        if (commands[j] == '[')
-                            level++
                     }
-                    if (wasFound == false)
-                        throw IllegalArgumentException()
+                    if (commands[j] == '[')
+                        level++
                 }
+                if (wasFound == false)
+                    throw IllegalArgumentException()
             }
             commands[i] == ']' -> {
-                if (digits[cellPosition] != 0) {
-                    var wasFound = false
-                    var level = 1
-                    for (j in (i - 1) downTo 0) {
-                        if (commands[j] == '[') {
-                            level--
-                            if (level == 0) {
-                                wasFound = true
+                var wasFound = false
+                var level = 1
+                for (j in (i - 1) downTo 0) {
+                    if (commands[j] == '[') {
+                        level--
+                        if (level == 0) {
+                            wasFound = true
+                            if (digits[cellPosition] != 0)
                                 i = j
-                                break
-                            }
+                            break
                         }
-                        if (commands[j] == ']')
-                            level++
                     }
-                    if (wasFound == false)
-                        throw IllegalArgumentException()
+                    if (commands[j] == ']')
+                        level++
                 }
+                if (wasFound == false)
+                    throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()
         }
