@@ -195,7 +195,44 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> {
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+
+enum class Way {
+    upLeft, upRight, downLeft, downRight, straight
+}
+
+fun kingMoveNumber(start: Square, end: Square): Int {
+    if (!start.inside() || !end.inside())
+        throw IllegalArgumentException()
+    if (start == end)
+        return 0
+    val m =
+            when {
+                start.column < end.column && start.row < end.row -> Way.upRight
+                start.column < end.column && start.row > end.row -> Way.downRight
+                start.column > end.column && start.row < end.row -> Way.upLeft
+                start.column > end.column && start.row > end.row -> Way.downLeft
+                else -> Way.straight
+            }
+    var count = 0
+    var move = start
+    while (move.column != end.column && move.row != end.row) {
+        when (m) {
+            Way.upRight -> move = Square(move.column + 1, move.row + 1)
+            Way.upLeft -> move = Square(move.column - 1, move.row + 1)
+            Way.downRight -> move = Square(move.column + 1, move.row - 1)
+            Way.downLeft -> move = Square(move.column - 1, move.row - 1)
+            Way.straight -> {
+            }
+        }
+        count++
+    }
+    count += when {
+        move.column == end.column -> Math.abs(end.row - move.row)
+        move.row == end.row -> Math.abs(end.column - move.column)
+        else -> 0
+    }
+    return count
+}
 
 /**
  * Сложная
@@ -211,7 +248,44 @@ fun kingMoveNumber(start: Square, end: Square): Int = TODO()
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    when (kingMoveNumber(start, end)) {
+        0 -> return listOf(start)
+        1 -> return listOf(start, end)
+    }
+    val list = mutableListOf<Square>(start)
+    val m =
+            when {
+                start.column < end.column && start.row < end.row -> Way.upRight
+                start.column < end.column && start.row > end.row -> Way.downRight
+                start.column > end.column && start.row < end.row -> Way.upLeft
+                start.column > end.column && start.row > end.row -> Way.downLeft
+                else -> Way.straight
+            }
+    var move = start
+    while (move.column != end.column && move.row != end.row) {
+        when (m) {
+            Way.upRight -> move = Square(move.column + 1, move.row + 1)
+            Way.upLeft -> move = Square(move.column - 1, move.row + 1)
+            Way.downRight -> move = Square(move.column + 1, move.row - 1)
+            Way.downLeft -> move = Square(move.column - 1, move.row - 1)
+            Way.straight -> {
+            }
+        }
+        list.add(move)
+    }
+    while (!(move.column == end.column && move.row == end.row)) {
+        when {
+            move.column < end.column -> move = Square(move.column + 1, move.row)
+            move.column > end.column -> move = Square(move.column - 1, move.row)
+            move.row > end.row -> move = Square(move.column, move.row - 1)
+            move.row < end.row -> move = Square(move.column, move.row + 1)
+        }
+        list.add(move)
+    }
+    return list
+}
+
 
 /**
  * Сложная
