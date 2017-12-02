@@ -120,7 +120,7 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
     if (matrix.width < 1 || matrix.height < 1) return matrix
     if (matrix.height != matrix.width)
         throw IllegalArgumentException()
-    val result = createMatrix(matrix.height, matrix.width, e = matrix[0, 0])
+    val result = createMatrix(matrix.height, matrix.width, matrix[0, 0])
     for (i in 0 until matrix.width) {
         for (j in 0 until matrix.height)
             result[j, matrix.width - 1 - i] = matrix[i, j]
@@ -160,7 +160,38 @@ fun isLatinSquare(matrix: Matrix<Int>): Boolean = TODO()
  *
  * 42 ===> 0
  */
-fun sumNeighbours(matrix: Matrix<Int>): Matrix<Int> = TODO()
+fun safeGet(matrix: Matrix<Int>, i: Int, j: Int): Int {
+    return try {
+        matrix[i, j]
+    } catch (ex: IndexOutOfBoundsException) {
+        0
+    }
+}
+
+fun sum(matrix: Matrix<Int>, i: Int, j: Int): Int {
+    var sum = 0
+    sum += safeGet(matrix, i + 1, j)
+    sum += safeGet(matrix, i + 1, j + 1)
+    sum += safeGet(matrix, i, j + 1)
+    sum += safeGet(matrix, i - 1, j + 1)
+    sum += safeGet(matrix, i - 1, j)
+    sum += safeGet(matrix, i - 1, j - 1)
+    sum += safeGet(matrix, i, j - 1)
+    sum += safeGet(matrix, i + 1, j - 1)
+    return sum
+}
+
+fun sumNeighbours(matrix: Matrix<Int>): Matrix<Int> {
+    val result = createMatrix(matrix.height, matrix.width, 0)
+    if (matrix.width < 1 || matrix.height < 1) return matrix
+    if (matrix.width == 1 && matrix.height == 1) return createMatrix(1, 1, 0)
+    for (j in 0 until matrix.width) {
+        for (i in 0 until matrix.height) {
+            result[i, j] = sum(matrix, i, j)
+        }
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -177,7 +208,26 @@ fun sumNeighbours(matrix: Matrix<Int>): Matrix<Int> = TODO()
  * 0 0 1 0
  * 0 0 0 0
  */
-fun findHoles(matrix: Matrix<Int>): Holes = TODO()
+fun findHoles(matrix: Matrix<Int>): Holes {
+    val listRow = mutableListOf<Int>()
+    val listColumn = mutableListOf<Int>()
+    if (matrix.width < 1 || matrix.height < 1) return Holes(listOf(), listOf())
+    iloop@ for (i in 0 until matrix.height) {
+        for (j in 0 until matrix.width) {
+            if (matrix[i, j] != 0)
+                continue@iloop
+        }
+        listRow.add(i)
+    }
+    jloop@ for (j in 0 until matrix.width) {
+        for (i in 0 until matrix.height) {
+            if (matrix[i, j] != 0)
+                continue@jloop
+        }
+        listColumn.add(j)
+    }
+    return Holes(listRow, listColumn)
+}
 
 /**
  * Класс для описания местонахождения "дырок" в матрице
