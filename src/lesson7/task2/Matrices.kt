@@ -97,13 +97,36 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  *
  * Содержимое квадратной матрицы matrix (с произвольным содержимым) повернуть на 90 градусов по часовой стрелке.
  * Если height != width, бросить IllegalArgumentException.
+ * 00 02
+ * 01 12
+ * 02 22
+ * 10 01
+ * 11 11
+ * 12 21
  *
+ * 1 2       3 1
+ * 3 4       4 2
+ *
+ * 00 01
+ * 01 11
+ * 10 00
+ * 11 10
  * Пример:    Станет:
  * 1 2 3      7 4 1
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.width < 1 || matrix.height < 1) return matrix
+    if (matrix.height != matrix.width)
+        throw IllegalArgumentException()
+    val result = createMatrix(matrix.height, matrix.width, e = matrix[0, 0])
+    for (i in 0 until matrix.width) {
+        for (j in 0 until matrix.height)
+            result[j, matrix.width - 1 - i] = matrix[i, j]
+    }
+    return result
+}
 
 /**
  * Сложная
