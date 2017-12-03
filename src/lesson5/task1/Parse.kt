@@ -334,42 +334,12 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
             commands[i] == ' ' -> {
             }
             commands[i] == '[' -> {
-                var wasFound = false
-                var level = 1
-                for (j in i + 1 until commands.length) {
-                    if (commands[j] == ']') {
-                        level--
-                        if (level == 0) {
-                            wasFound = true
-                            if (digits[cellPosition] == 0)
-                                i = j
-                            break
-                        }
-                    }
-                    if (commands[j] == '[')
-                        level++
-                }
-                if (!wasFound)
-                    throw IllegalArgumentException()
+                if (digits[cellPosition] == 0)
+                    i = search(commands, i + 1 until commands.length, '[', ']')
             }
             commands[i] == ']' -> {
-                var wasFound = false
-                var level = 1
-                for (j in (i - 1) downTo 0) {
-                    if (commands[j] == '[') {
-                        level--
-                        if (level == 0) {
-                            wasFound = true
-                            if (digits[cellPosition] != 0)
-                                i = j
-                            break
-                        }
-                    }
-                    if (commands[j] == ']')
-                        level++
-                }
-                if (!wasFound)
-                    throw IllegalArgumentException()
+                if (digits[cellPosition] != 0)
+                    i = search(commands, i - 1 downTo 0, ']', '[')
             }
             else -> throw IllegalArgumentException()
         }
@@ -383,3 +353,17 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     return digits
 }
 
+private fun search(commands: String, diapason: IntProgression, a: Char, b: Char): Int {
+    var level = 1
+    for (j in diapason) {
+        if (commands[j] == b) {
+            level--
+            if (level == 0) {
+                return j
+            }
+        }
+        if (commands[j] == a)
+            level++
+    }
+    throw IllegalArgumentException()
+}

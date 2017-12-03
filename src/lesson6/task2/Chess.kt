@@ -94,7 +94,6 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
     return if (rookMoveNumber(start, end) == 1)
         listOf(start, end)
     else listOf(start, Square(start.column, end.row), end)
-
 }
 
 /**
@@ -120,15 +119,12 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  * Примеры: bishopMoveNumber(Square(3, 1), Square(6, 3)) = -1; bishopMoveNumber(Square(3, 1), Square(3, 7)) = 2.
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
-fun bishopMoveNumber(start: Square, end: Square): Int {
-    when {
-        !start.inside() || !end.inside() -> throw IllegalArgumentException()
-        start == end -> return 0
-        (start.column + start.row) % 2 != (end.column + end.row) % 2 -> return -1
-    }
-    val n = Math.abs(start.column - end.column)
-    val m = Math.abs(start.row - end.row)
-    return if (n == m) 1 else 2
+fun bishopMoveNumber(start: Square, end: Square): Int = when {
+    !start.inside() || !end.inside() -> throw IllegalArgumentException()
+    start == end -> 0
+    (start.column + start.row) % 2 != (end.column + end.row) % 2 -> -1
+    Math.abs(start.column - end.column) == Math.abs(start.row - end.row) -> 1
+    else -> 2
 }
 
 /**
@@ -202,8 +198,7 @@ fun kingMoveNumber(start: Square, end: Square): Int {
         throw IllegalArgumentException()
     if (start == end)
         return 0
-    val m =
-            when {
+    val m = when {
                 start.column < end.column && start.row < end.row -> Way.upRight
                 start.column < end.column && start.row > end.row -> Way.downRight
                 start.column > end.column && start.row < end.row -> Way.upLeft
