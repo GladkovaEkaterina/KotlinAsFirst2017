@@ -111,7 +111,7 @@ fun diameter(vararg points: Point): Segment {
     if (points.size < 2)
         throw IllegalArgumentException()
     for (j in 0 until points.size) {
-        for (i in j - 1 until points.size) {
+        for (i in j + 1 until points.size) {
             val s = points[i].distance(points[j])
             if (s > r) {
                 r = s
