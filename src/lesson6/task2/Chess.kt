@@ -199,12 +199,12 @@ fun kingMoveNumber(start: Square, end: Square): Int {
     if (start == end)
         return 0
     val m = when {
-                start.column < end.column && start.row < end.row -> Way.upRight
-                start.column < end.column && start.row > end.row -> Way.downRight
-                start.column > end.column && start.row < end.row -> Way.upLeft
-                start.column > end.column && start.row > end.row -> Way.downLeft
-                else -> Way.straight
-            }
+        start.column < end.column && start.row < end.row -> Way.upRight
+        start.column < end.column && start.row > end.row -> Way.downRight
+        start.column > end.column && start.row < end.row -> Way.upLeft
+        start.column > end.column && start.row > end.row -> Way.downLeft
+        else -> Way.straight
+    }
     var count = 0
     var move = start
     while (move.column != end.column && move.row != end.row) {
