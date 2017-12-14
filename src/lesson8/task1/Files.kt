@@ -53,7 +53,19 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val result = mutableMapOf<String, Int>()
+    for (i in 0 until substrings.size) {
+        result[substrings[i]] = 0
+    }
+    for (line in File(inputName).readLines()) {
+        for (elem in substrings) {
+            val parts = line.split(elem, ignoreCase = true).size
+            result[elem] = result[elem]!! + parts - 1
+        }
+    }
+    return result
+}
 
 
 /**
@@ -69,9 +81,30 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  * Исключения (жюри, брошюра, парашют) в рамках данного задания обрабатывать не нужно
  *
  */
+
+
+//эта задача не закончена, не смотрите на нее
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    for (line in File(inputName).readLines()) {
+        val list = listOf("ж", "ч", "щ", "ш")
+        for (elem in list) {
+            val index = line.indexOf(elem, startIndex = 0, ignoreCase = true)
+            var beginRange = 0
+            when (line[index + 1]) {
+                'ы' -> outputStream.write(line.substring(beginRange, index) + "и")
+                'ю' -> outputStream.write(line.substring(beginRange, index) + "у")
+                'я' -> outputStream.write(line.substring(beginRange, index) + "а")
+                else -> outputStream.write(line.substring(beginRange, index + 1))
+            }
+            beginRange = index + 2
+            if (index == -1) outputStream.write(line.substring(beginRange, index + 1))
+        }
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
+
 
 /**
  * Средняя
